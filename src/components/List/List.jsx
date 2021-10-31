@@ -1,7 +1,70 @@
-import React from "react";
+import {
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+
+import useStyles from "./styles";
+import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
 const List = () => {
-  return <h1>List</h1>;
+  const classes = useStyles();
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("0");
+
+  const places = [
+    { name: "place1" },
+    { name: "place2" },
+    { name: "place3" },
+    { name: "place1" },
+    { name: "place2" },
+    { name: "place3" },
+  ];
+
+  return (
+    <div className={classes.container}>
+      <Typography variant="h4">Restaurants, Hotels and Attractions</Typography>
+      <FormControl className={classes.formControl}>
+        <InputLabel>Type</InputLabel>
+        <Select
+          label="Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <MenuItem value="restaurants">restaurants</MenuItem>
+          <MenuItem value="hotels">hotels</MenuItem>
+          <MenuItem value="attractions">attractions</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl className={classes.formControl}>
+        <InputLabel>Ratings</InputLabel>
+        <Select
+          label="Ratings"
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+        >
+          <MenuItem value={0}>All</MenuItem>
+          <MenuItem value={3}>Above 3.0</MenuItem>
+          <MenuItem value={4}>Above 4.0</MenuItem>
+          <MenuItem value={4.5}>Above 4.5</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Grid container spacing={3} className={classes.list}>
+        {places?.map((place, i) => (
+          <Grid item key={i} xs={12}>
+            <PlaceDetails place={place} />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 };
 
 export default List;
